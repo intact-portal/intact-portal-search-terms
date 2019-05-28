@@ -1,10 +1,11 @@
 package uk.ac.ebi.intact.search.terms.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import uk.ac.ebi.intact.search.terms.model.Term;
+import uk.ac.ebi.intact.search.terms.model.SearchTerm;
 import uk.ac.ebi.intact.search.terms.repository.TermRepository;
+
+import java.util.Optional;
 
 /**
  * @author Elisabet Barrera
@@ -12,16 +13,18 @@ import uk.ac.ebi.intact.search.terms.repository.TermRepository;
 @Service
 public class TermSearchService {
 
-    @Autowired
-    @Qualifier("termRepository")
-    private TermRepository termRepository;
+    private final TermRepository termRepository;
 
-    public Iterable<Term> findAll() {
+    public TermSearchService(@Qualifier("termRepository") TermRepository termRepository) {
+        this.termRepository = termRepository;
+    }
+
+    public Iterable<SearchTerm> findAll() {
         return this.termRepository.findAll();
     }
 
-    public Term findBy(String id) {
-        return this.termRepository.findOne(id);
+    public Optional<SearchTerm> findById(String id) {
+        return this.termRepository.findById(id);
     }
 
     public long countDocuments() {

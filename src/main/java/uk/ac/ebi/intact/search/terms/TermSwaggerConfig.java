@@ -30,8 +30,8 @@ public class TermSwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfo(
-                "IntAct Interactor Search REST API",
-                "This API allow searching interactor information in the IntAct database.",
+                "IntAct Term Search REST API",
+                "This API allow searching control vocabulary information in the IntAct database.",
                 "API 1.0 BETA",
                 "https://www.ebi.ac.uk/about/terms-of-use",
                  new Contact("IntAct", "https://www.ebi.ac.uk/intact", "intact@helpdesk.ebi.ac.uk"),

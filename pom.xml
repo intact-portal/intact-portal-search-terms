@@ -25,9 +25,9 @@
     </properties>
 
     <scm>
-        <connection>scm:git:https://github.com/EBI-IntAct/intact-search-searchTerms.git</connection>
-        <developerConnection>scm:git:https://github.com/EBI-IntAct/intact-search-searchTerms.git</developerConnection>
-        <url>https://github.com/EBI-IntAct/intact-search-searchTerms</url>
+        <connection>scm:git:https://github.com/intact-portal/intact-portal-search-terms.git</connection>
+        <developerConnection>scm:git:https://github.com/intact-portal/intact-portal-search-terms.git</developerConnection>
+        <url>https://github.com/intact-portal/intact-portal-search-terms</url>
         <tag>HEAD</tag>
     </scm>
 

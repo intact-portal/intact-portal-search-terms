@@ -10,8 +10,8 @@ import java.util.List;
 /**
  * @author Elisabet Barrera
  */
-@SolrDocument(solrCoreName = "terms")
-public class Term {
+@SolrDocument(collection = "terms")
+public class SearchTerm {
 
     @Id
     @Field("term_id")
@@ -36,7 +36,7 @@ public class Term {
     @Field("parent_term_synonyms")
     private List<String> parent_term_synonyms;
 
-    @Field("dbOntology")
+    @Field("db_ontology")
     private String dbOntology;
 
     @Field("definition")
@@ -45,12 +45,12 @@ public class Term {
     @Field("interaction_count")
     private Integer interactionCount;
 
-    public Term() {
+    public SearchTerm() {
     }
 
-    public Term(String term_id, String term_name, List<String> term_synonyms, String term_type, String parent_term_id,
-                String parent_term_name, List<String> parent_term_synonyms, String dbOntology, String definition,
-                Integer interactionCount) {
+    public SearchTerm(String term_id, String term_name, List<String> term_synonyms, String term_type, String parent_term_id,
+                      String parent_term_name, List<String> parent_term_synonyms, String dbOntology, String definition,
+                      Integer interactionCount) {
         this.term_id = term_id;
         this.term_name = term_name;
         this.term_synonyms = term_synonyms;
@@ -145,7 +145,7 @@ public class Term {
 
     @Override
     public String toString() {
-        return "Term{" +
+        return "SearchTerm{" +
                 "term_id='" + term_id + '\'' +
                 ", term_name='" + term_name + '\'' +
                 ", term_synonyms=" + term_synonyms +

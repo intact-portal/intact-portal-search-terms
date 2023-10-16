@@ -1,25 +1,29 @@
 package uk.ac.ebi.intact.search.terms.service;
 
 import org.junit.Before;
-import org.junit.ClassRule;
 import org.junit.Test;
-import uk.ac.ebi.intact.search.terms.model.Term;
-import uk.ac.ebi.intact.search.terms.service.util.RequiresSolrServer;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import uk.ac.ebi.intact.search.terms.model.SearchTerm;
 
 import javax.annotation.Resource;
 import java.util.Arrays;
+import java.util.Optional;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author Elisabet Barrera
  */
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class TermIndexServiceTest {
 
 
-    private Term term1;
-    private Term term2;
-    private Term term3;
+    private SearchTerm searchTerm1;
+    private SearchTerm searchTerm2;
+    private SearchTerm searchTerm3;
 
     @Resource
     private TermIndexService termIndexService;
@@ -27,17 +31,14 @@ public class TermIndexServiceTest {
     @Resource
     private TermSearchService termSearchService;
 
-    public static @ClassRule
-    RequiresSolrServer requiresRunningServer = RequiresSolrServer.onLocalhost();
-
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
 
         //Delete all documents from solr core
         termIndexService.deleteAll();
 
         //Create new interactors documents
-        term1 = new Term("termId1",
+        searchTerm1 = new SearchTerm("termId1",
                 "termName1",
                 Arrays.asList("term1_syn1", "term1_syn2", "term1_syn3", "term1_syn4"),
                 "termType1",
@@ -48,7 +49,7 @@ public class TermIndexServiceTest {
                 "definition1",
                 20);
 
-        term2 = new Term("termId2",
+        searchTerm2 = new SearchTerm("termId2",
                 "termName2",
                 Arrays.asList("term2_syn1", "term2_syn2", "term2_syn3", "term2_syn4"),
                 "termType1",
@@ -59,7 +60,7 @@ public class TermIndexServiceTest {
                 "definition2",
                 15);
 
-        term3 = new Term("termId3",
+        searchTerm3 = new SearchTerm("termId3",
                 "termName3",
                 Arrays.asList("term3_syn1", "term3_syn2", "term3_syn3", "term3_syn4"),
                 "termType1",
@@ -73,10 +74,10 @@ public class TermIndexServiceTest {
 
     @Test
     public void triggerSchemaUpdateOnFirstSave() {
-        termIndexService.save(term1);
+        termIndexService.save(searchTerm1);
 
-        Term term = termSearchService.findBy("termId1");
-        assertEquals(term.getDbOntology(), term1.getDbOntology());
+        Optional<SearchTerm> searchTerm = termSearchService.findById("termId1");
+        assertEquals(searchTerm.get().getDbOntology(), searchTerm1.getDbOntology());
         assertEquals(termSearchService.countDocuments(), 1);
     }
 
@@ -85,7 +86,7 @@ public class TermIndexServiceTest {
         // empty collection
         termIndexService.deleteAll();
 
-        termIndexService.save(Arrays.asList(term1, term2, term3));
+        termIndexService.save(Arrays.asList(searchTerm1, searchTerm2, searchTerm3));
         assertEquals(termSearchService.countDocuments(), 3);
     }
 
